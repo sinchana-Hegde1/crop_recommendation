@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Crop Recommendation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary-color: #3498db;
+            --text-dark: #34495e;
+            --text-light: #7f8c8d;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        @media (min-width: 992px) {
+            .main-content {
+                grid-template-columns: 1.2fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .prediction-form .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background-position 0.5s;
+            background-size: 200%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+            background-position: right;
+        }
+
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .result-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            display: block;
+        }
+        
+        .result-placeholder svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .prediction-result {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .prediction-result h3 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .prediction-result .crop-name {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 0.5rem 0;
+            text-transform: capitalize;
+        }
+
+        .prediction-result .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .prediction-form .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-section">
+        <h1>AI-Powered Crop Recommendation</h1>
+        <p>Leverage data to discover the optimal crop for your specific soil and climate conditions.</p>
+    </header>
+
+    <main class="main-content">
+        <section class="card prediction-form">
+            <h2>Enter Environmental Data</h2>
+            <form id="crop-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="N">Nitrogen (N) in kg/ha</label>
+                        <input type="number" id="N" name="N" class="form-input" placeholder="e.g., 90" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="P">Phosphorus (P) in kg/ha</label>
+                        <input type="number" id="P" name="P" class="form-input" placeholder="e.g., 42" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="K">Potassium (K) in kg/ha</label>
+                        <input type="number" id="K" name="K" class="form-input" placeholder="e.g., 43" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="temperature">Temperature in °C</label>
+                        <input type="number" step="0.01" id="temperature" name="temperature" class="form-input" placeholder="e.g., 20.87" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="humidity">Humidity in %</label>
+                        <input type="number" step="0.01" id="humidity" name="humidity" class="form-input" placeholder="e.g., 82.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ph">Soil pH Value</label>
+                        <input type="number" step="0.01" id="ph" name="ph" class="form-input" placeholder="e.g., 6.50" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="rainfall">Rainfall in mm</label>
+                        <input type="number" step="0.01" id="rainfall" name="rainfall" class="form-input" placeholder="e.g., 202.93" required>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Recommend Crop</button>
+            </form>
+        </section>
+
+        <section class="card result-card">
+            <div class="result-placeholder" id="result-placeholder">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                <p>Your recommended crop will appear here.</p>
+            </div>
+            <div class="prediction-result" id="prediction-result">
+                <div class="result-icon" id="result-icon"></div>
+                <h3>Recommended Crop</h3>
+                <p class="crop-name" id="crop-name">...</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('crop-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const resultPlaceholder = document.getElementById('result-placeholder');
+            const predictionResultDiv = document.getElementById('prediction-result');
+            const cropNameP = document.getElementById('crop-name');
+            const resultIconDiv = document.getElementById('result-icon');
+            const submitButton = e.target.querySelector('.submit-btn');
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            submitButton.textContent = 'Analyzing...';
+            submitButton.disabled = true;
+
+            const cropIcons = {
+                rice: '🌾',
+                maize: '�',
+                jute: '🌿',
+                cotton: '☁️',
+                coconut: '🥥',
+                papaya: '🥭',
+                orange: '🍊',
+                apple: '🍎',
+                muskmelon: '🍈',
+                watermelon: '🍉',
+                grapes: '🍇',
+                mango: '🥭',
+                banana: '🍌',
+                pomegranate: '🍎',
+                lentil: '🌰',
+                blackgram: '🌰',
+                mungbean: '🌱',
+                mothbeans: '🌱',
+                pigeonpeas: '🌱',
+                kidneybeans: '🌰',
+                chickpea: '🌰',
+                coffee: '☕️'
+            };
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.prediction) {
+                    const recommendedCrop = result.prediction;
+                    resultPlaceholder.style.display = 'none';
+                    cropNameP.textContent = recommendedCrop;
+                    resultIconDiv.textContent = cropIcons[recommendedCrop.toLowerCase()] || '🌱';
+                    predictionResultDiv.style.display = 'block';
+                } else {
+                    throw new Error('Invalid response from server');
+                }
+
+            } catch (error) {
+                console.error('Prediction Error:', error);
+                resultPlaceholder.style.display = 'none';
+                predictionResultDiv.style.display = 'block';
+                resultIconDiv.textContent = '⚠️';
+                cropNameP.textContent = 'Error';
+                cropNameP.insertAdjacentHTML('afterend', `<p style="font-size: 1rem; color: var(--text-light); margin-top: 0.5rem;">Could not get a prediction. Please check the server.</p>`);
+            } finally {
+                submitButton.textContent = 'Recommend Crop';
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
