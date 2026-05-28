@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
 import numpy as np
-import pandas as pd
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
 model_filename = 'model.pkl'
 try:
@@ -14,7 +13,7 @@ try:
         model = pickle.load(file)
     print("Model loaded successfully.")
 except FileNotFoundError:
-    print(f"Error: Model file '{model_filename}' not found. Please run the training script first.")
+    print(f"Error: Model file '{model_filename}' not found.")
     model = None 
 
 @app.route('/')
