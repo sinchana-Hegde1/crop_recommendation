@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import pickle
 import numpy as np
 import pandas as pd
+import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 model_filename = 'model.pkl'
 try:
@@ -55,5 +58,11 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Dynamic port for deployment platforms (Render, Vercel, etc.)
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Set debug based on environment
+    debug_mode = os.environ.get('FLASK_ENV', 'development') == 'development'
+    
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
 
