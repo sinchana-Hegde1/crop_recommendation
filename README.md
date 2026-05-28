@@ -1,7 +1,8 @@
-<<<<<<< HEAD
 # AI-Powered Crop Recommendation System
 
 An intelligent crop recommendation system that leverages a Random Forest machine learning model to predict the optimal crop to grow based on soil and environmental factors. The model is deployed as a user-friendly web application using the Flask framework.
+
+**Live Demo:** [https://crop-recommendation-4i0t.onrender.com](https://crop-recommendation-4i0t.onrender.com)
 
 ---
 
@@ -33,6 +34,7 @@ The features include:
 - **Real-time Predictions:** Get instant crop recommendations powered by a high-accuracy machine learning model.
 - **Data-Driven Insights:** Based on a comprehensive dataset of agricultural conditions.
 - **Scalable Backend:** Built with Flask, allowing for easy expansion and integration.
+- **Cloud Deployed:** Hosted on Render for instant access.
 
 ---
 
@@ -41,16 +43,13 @@ The features include:
 - **Backend:** Python, Flask
 - **Machine Learning:** Scikit-learn, Pandas, NumPy
 - **Frontend:** HTML, CSS, JavaScript
+- **Deployment:** Render
 
 ---
 
 ## 📸 Screenshots
 
-#### **Web Application UI**
-![Application UI](https://github.com/Vasu-uu/Crop-Recommendation-System/raw/main/Screenshots/ui.PNG)
-
-#### **Sample Output**
-![Sample Output](https://github.com/Vasu-uu/Crop-Recommendation-System/raw/main/Screenshots/s1.PNG)
+Screenshots are available in the `Screenshots/` directory of the repository.
 
 ---
 
@@ -60,8 +59,8 @@ Follow these steps to set up and run the project on your local machine:
 
 ### 1️⃣ Clone the Repository
 ```bash
-git https://github.com/Vasu-uu/Crop-Recommendation-System.git
-cd Crop-Recommendation-System
+git clone https://github.com/sinchana-Hegde1/crop_recommendation.git
+cd crop_recommendation
 ```
 
 ### 2️⃣ Create and Activate a Virtual Environment
@@ -88,44 +87,22 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### 5️⃣ Access the Application
-Open your browser and go to:  
-[http://127.0.0.1:5000](http://127.0.0.1:5000)
+
 
 You should now see the application running and ready for predictions.
 
 ---
 
-## Author
+## 🚀 Deployment
 
-**Vasudev V**  
-[GitHub - Vasu-uu](https://github.com/Vasu-uu)
-=======
-# Crop-Recommendation-System
-It is a Machine Learning based Project
-An AI-powered machine learning application that suggests the most suitable crop to grow based on soil and weather parameters.
+This project is deployed on **Render** and is live at: [https://crop-recommendation-4i0t.onrender.com](https://crop-recommendation-4i0t.onrender.com)
 
-
-This project uses a *Random Forest Classifier* to recommend crops by analyzing:
-- Nitrogen (N) content in soil
-- Phosphorus (P) content in soil
-- Potassium (K) content in soil
-- Temperature (°C)
-- Humidity (%)
-- pH level of soil
-- Rainfall (mm)
-
-Built using:
-- Python
-- Flask (for the web interface)
-- Scikit-learn (for ML model)
-- Pandas & NumPy (for data handling)
+For deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ---
 
-## 🚀 Features
-- Simple and user-friendly web interface
-- Fast and accurate crop predictions
-- Easy to deploy locally or on the cloud
-- Trained on agricultural dataset for multiple crop types
->>>>>>> 55c030484214c2e3e0a3859b76f2fe222f73183c
+## Author
+
+**Sinchana Hegde**  
+[GitHub - sinchana-Hegde1](https://github.com/sinchana-Hegde1)  
+[Repository - crop_recommendation](https://github.com/sinchana-Hegde1/crop_recommendation)
